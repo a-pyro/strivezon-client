@@ -7,8 +7,8 @@ class SideBar extends Component {
   render() {
     return (
       <ListGroup>
-        <Link className='nav-link' to='/'>
-          <ListGroup.Item className='bg-transparent border-0 text-white'>
+        <Link className='nav-link pt-0' to='/'>
+          <ListGroup.Item className='bg-transparent border-0 text-white pt-0'>
             <h3>Strivezon</h3>
           </ListGroup.Item>
         </Link>

@@ -6,12 +6,12 @@ import { Col, Container, Row } from 'react-bootstrap';
 export default class DashboardLayout extends Component {
   render() {
     return (
-      <Container fluid className='pt-5'>
+      <Container fluid>
         <Row>
-          <Col className='bg-dark pt-5' md={4}>
+          <Col className='bg-dark pt-5' md={2}>
             <SideBar />
           </Col>
-          <Col className='bg-secondary pt-5' md={8}>
+          <Col className='bg-secondary pt-5' md={10}>
             <NavBar />
             {this.props.children}
           </Col>

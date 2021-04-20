@@ -4,7 +4,7 @@ const initialValues = {
   name: '',
   description: '',
   brand: '',
-  price: undefined,
+  price: 0,
   category: '',
 };
 const AddProductModal = ({ fetchProducts }) => {
@@ -68,7 +68,6 @@ const AddProductModal = ({ fetchProducts }) => {
       console.log('up pic resp:', resp);
     } catch (error) {
       console.log(error);
-    } finally {
     }
   };
 
