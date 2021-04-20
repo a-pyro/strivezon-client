@@ -10,7 +10,7 @@ export default class Product extends Component {
         <Card.Body>
           <Card.Title>{name}</Card.Title>
           <Card.Text>{description}</Card.Text>
-          <Button variant='primary'>Go somewhere</Button>
+          <Button variant='primary'>Reviews</Button>
         </Card.Body>
       </Card>
     );

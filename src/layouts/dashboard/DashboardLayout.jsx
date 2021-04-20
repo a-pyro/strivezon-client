@@ -11,7 +11,7 @@ export default class DashboardLayout extends Component {
           <Col className='bg-dark pt-5' md={4}>
             <SideBar />
           </Col>
-          <Col className='bg-primary pt-5' md={8}>
+          <Col className='bg-secondary pt-5' md={8}>
             <NavBar />
             {this.props.children}
           </Col>
