@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom';
 
 class SideBar extends Component {
   render() {
-    console.log(this.props);
     return (
       <ListGroup>
         <Link className='nav-link' to='/'>
