@@ -1,5 +1,7 @@
 import AddProductModal from 'components/AddProductModal';
+import Product from 'components/Product';
 import React, { Component } from 'react';
+import { Row, Col } from 'react-bootstrap';
 
 export default class Admin extends Component {
   state = {
@@ -21,16 +23,26 @@ export default class Admin extends Component {
     }
   };
 
-  addProduct = async () => {
-    const apiUrl = process.env.REACT_APP_API_URL;
-    try {
-    } catch (error) {
-      console.log(error);
-    } finally {
-      this.setState({ loading: false });
-    }
+  componentDidMount = () => {
+    this.fetchProducts();
   };
+
   render() {
-    return <AddProductModal />;
+    return (
+      <>
+        <Row>
+          <Col className='my-3'>
+            <AddProductModal fetchProducts={this.fetchProducts} />
+          </Col>
+        </Row>
+        <Row>
+          {this.state.products.map((prod) => (
+            <Col key={prod._id}>
+              <Product {...prod} />
+            </Col>
+          ))}
+        </Row>
+      </>
+    );
   }
 }
