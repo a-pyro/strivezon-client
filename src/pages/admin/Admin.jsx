@@ -1,48 +1,45 @@
-import AddProductModal from 'components/AddProductModal';
 import Product from 'components/Product';
-import React, { Component } from 'react';
+import AddProductModal from 'components/AddProductModal';
+import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
-export default class Admin extends Component {
-  state = {
-    products: [],
-    loading: true,
-  };
-  fetchProducts = async () => {
+const Admin = (props) => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchProducts = async () => {
     const url = process.env.REACT_APP_API_URL;
     try {
       const resp = await fetch(`${url}/products`);
       if (resp.ok) {
         const data = await resp.json();
-        this.setState({ products: data.data });
+        setProducts(data.data);
       }
     } catch (error) {
       console.log(error);
     } finally {
-      this.setState({ loading: false });
+      setLoading(false);
     }
   };
+  useEffect(() => {}, []);
 
-  componentDidMount = () => {
-    this.fetchProducts();
-  };
-
-  render() {
-    return (
-      <>
-        <Row>
-          <Col className='my-3'>
-            <AddProductModal fetchProducts={this.fetchProducts} />
+  return (
+    <>
+      <Row>
+        <Col className='my-3'>
+          <AddProductModal fetchProducts={fetchProducts} />
+        </Col>
+      </Row>
+      <Row>
+        {products.map((prod) => (
+          <Col key={prod._id}>
+            <Product {...prod} />
           </Col>
-        </Row>
-        <Row>
-          {this.state.products.map((prod) => (
-            <Col key={prod._id}>
-              <Product {...prod} />
-            </Col>
-          ))}
-        </Row>
-      </>
-    );
-  }
-}
+        ))}
+      </Row>
+    </>
+  );
+};
+
+export default Admin;

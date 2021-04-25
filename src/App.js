@@ -9,15 +9,20 @@ export default class App extends Component {
   render() {
     return (
       <Router>
-        <Route
+        {/* <Route
           path='/'
           exact
-          render={() => (
+          render={(routerProps) => (
             <DashboardLayout>
-              <Home />
+              <Home {...routerProps} />
             </DashboardLayout>
           )}
-        />
+        /> */}
+        <Route path='/' exact>
+          <DashboardLayout>
+            <Home />
+          </DashboardLayout>
+        </Route>
         <Route
           path='/admin'
           render={() => (

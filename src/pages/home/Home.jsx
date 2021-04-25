@@ -23,6 +23,7 @@ export default class Admin extends Component {
   };
 
   componentDidMount = () => {
+    console.log(this.props);
     this.fetchProducts();
   };
   render() {

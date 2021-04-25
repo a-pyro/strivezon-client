@@ -30,7 +30,7 @@ class SideBar extends Component {
         >
           {' '}
           <ListGroup.Item className='bg-transparent border-0 text-white'>
-            <h4>Admin</h4>
+            <h1>Admin</h1>
           </ListGroup.Item>
         </Link>
       </ListGroup>
