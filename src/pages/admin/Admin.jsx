@@ -2,7 +2,6 @@ import Product from 'components/Product';
 import AddProductModal from 'components/AddProductModal';
 import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
 
 const Admin = (props) => {
   const [products, setProducts] = useState([]);
@@ -22,18 +21,28 @@ const Admin = (props) => {
       setLoading(false);
     }
   };
-  useEffect(() => {}, []);
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <>
       <Row>
         <Col className='my-3'>
-          <AddProductModal fetchProducts={fetchProducts} />
+          <AddProductModal mode='add' fetchProducts={fetchProducts} />
         </Col>
       </Row>
       <Row>
         {products.map((prod) => (
-          <Col key={prod._id}>
+          <Col
+            xs={12}
+            sm={6}
+            md={4}
+            lg={3}
+            xl={2}
+            className='mb-3 shadow px-2'
+            key={prod._id}
+          >
             <Product {...prod} />
           </Col>
         ))}

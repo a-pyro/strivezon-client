@@ -8,7 +8,7 @@ export default class DashboardLayout extends Component {
     return (
       <Container fluid>
         <Row>
-          <Col className='bg-dark pt-5' md={2}>
+          <Col className='bg-dark pt-5 pr-0' md={2}>
             <SideBar />
           </Col>
           <Col className='bg-secondary pt-5' md={10}>
