@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Button, Modal, Form, Image } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { Button, Modal, Form, Image, ListGroup } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 
 const AddProductModal = ({
@@ -25,6 +25,7 @@ const AddProductModal = ({
   const [fields, setFields] = useState(initialValues);
   const [filePreview, setFilePreview] = useState(null);
   const [file, setFile] = useState(null);
+  const [categories, setCategories] = useState([]);
 
   const handleClose = () => {
     setFields(initialValues);
@@ -36,10 +37,20 @@ const AddProductModal = ({
     setShow(true);
     console.log(brand);
   };
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const value = e.target.value;
     setFields({ ...fields, [e.target.name]: value });
   };
+
+  const fetchCategories = async () => {
+    const resp = await fetch(`${process.env.REACT_APP_API_URL}/categories`);
+    const categories = await resp.json();
+    setCategories(categories);
+  };
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
   const handleFileChange = (e) => {
     setFilePreview(URL.createObjectURL(e.target.files[0]));
     setFile(e.target.files[0]);
@@ -61,7 +72,7 @@ const AddProductModal = ({
 
       if (resp.ok) {
         console.log(body);
-        const id = body._id;
+        const id = body.id;
         await uploadProductPic(id);
         fetchProducts();
         setFields(initialValues);
@@ -147,7 +158,21 @@ const AddProductModal = ({
                     name='category'
                     type='text'
                     placeholder='Enter category'
+                    hidden
                   />
+                  <ListGroup>
+                    {categories.map((cat) => (
+                      <ListGroup.Item
+                        style={{ cursor: 'pointer' }}
+                        onClick={() =>
+                          setFields({ ...fields, category: cat.id })
+                        }
+                        key={cat.id}
+                      >
+                        {cat.name}
+                      </ListGroup.Item>
+                    ))}
+                  </ListGroup>
                 </Form.Group>
                 <Form.Group>
                   <Form.File

@@ -20,10 +20,19 @@ export default class Reviews extends Component {
               <div>
                 <span>Rating {rating}</span>
               </div>
-              <div>
-                <span>{createdAt}</span>
-                <span> by {first_name + ' ' + last_name}</span>
-                <Image src={avatar} />
+              <div className='d-flex justify-content-between'>
+                <div className='align-self-end'>
+                  <span>{createdAt}</span>
+                </div>
+                <div className='d-flex flex-column'>
+                  <Image
+                    className='align-self-end'
+                    roundedCircle
+                    style={{ width: '50px', height: '50px' }}
+                    src={avatar}
+                  />
+                  <span className='mr-2'> {first_name + ' ' + last_name}</span>
+                </div>
               </div>
             </ListGroup.Item>
           );
