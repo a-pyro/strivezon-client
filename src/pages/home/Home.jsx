@@ -1,6 +1,6 @@
 import Product from 'components/Product';
 import React, { Component } from 'react';
-import { Col, Container, Row, Spinner } from 'react-bootstrap';
+import { Col, Row, Spinner } from 'react-bootstrap';
 
 export default class Admin extends Component {
   state = {
@@ -30,7 +30,7 @@ export default class Admin extends Component {
   render() {
     const { loading, products } = this.state;
     return (
-      <Row noGutters className='mx-0 py-0'>
+      <Row>
         {(!loading &&
           products.map((prod) => (
             <Col
@@ -39,7 +39,7 @@ export default class Admin extends Component {
               md={4}
               lg={3}
               xl={2}
-              className='mb-3 shadow px-2 mx-0'
+              className='mb-3 px-2'
               key={prod._id}
             >
               <Product {...prod} />

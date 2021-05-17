@@ -1,15 +1,16 @@
 import Product from 'components/Product';
 import AddProductModal from 'components/AddProductModal';
 import React, { useState, useEffect } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Spinner } from 'react-bootstrap';
 
 const Admin = (props) => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const fetchProducts = async () => {
-    const url = process.env.REACT_APP_API_URL;
     try {
+      const url = process.env.REACT_APP_API_URL;
+      setLoading(true);
       const resp = await fetch(`${url}/products`);
       if (resp.ok) {
         const data = await resp.json();
@@ -32,21 +33,27 @@ const Admin = (props) => {
           <AddProductModal mode='add' fetchProducts={fetchProducts} />
         </Col>
       </Row>
-      <Row>
-        {products.map((prod) => (
-          <Col
-            xs={12}
-            sm={6}
-            md={4}
-            lg={3}
-            xl={2}
-            className='mb-3 shadow px-2'
-            key={prod._id}
-          >
-            <Product {...prod} />
-          </Col>
-        ))}
-      </Row>
+      {(loading && (
+        <Row className='justify-content-center'>
+          <Spinner animation='grow' />
+        </Row>
+      )) || (
+        <Row>
+          {products.map((prod) => (
+            <Col
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              xl={2}
+              className='mb-3 px-2'
+              key={prod._id}
+            >
+              <Product fetchProducts={fetchProducts} {...prod} />
+            </Col>
+          ))}
+        </Row>
+      )}
     </>
   );
 };

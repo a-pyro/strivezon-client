@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Button, Modal, Form, Image, ListGroup } from 'react-bootstrap';
+import { useState } from 'react';
+import { Button, Modal, Form, Image } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 
 const AddProductModal = ({
@@ -25,7 +25,6 @@ const AddProductModal = ({
   const [fields, setFields] = useState(initialValues);
   const [filePreview, setFilePreview] = useState(null);
   const [file, setFile] = useState(null);
-  const [categories, setCategories] = useState([]);
 
   const handleClose = () => {
     setFields(initialValues);
@@ -41,15 +40,6 @@ const AddProductModal = ({
     const value = e.target.value;
     setFields({ ...fields, [e.target.name]: value });
   };
-
-  const fetchCategories = async () => {
-    const resp = await fetch(`${process.env.REACT_APP_API_URL}/categories`);
-    const categories = await resp.json();
-    setCategories(categories);
-  };
-  useEffect(() => {
-    fetchCategories();
-  }, []);
 
   const handleFileChange = (e) => {
     setFilePreview(URL.createObjectURL(e.target.files[0]));
@@ -72,16 +62,19 @@ const AddProductModal = ({
 
       if (resp.ok) {
         console.log(body);
-        const id = body.id;
-        await uploadProductPic(id);
+        const { _id } = body;
+        if (file) {
+          await uploadProductPic(_id);
+        }
+
         fetchProducts();
         setFields(initialValues);
         setFilePreview(null);
         setFile(null);
+        setShow(false);
       }
     } catch (error) {
       console.log(error);
-    } finally {
     }
   };
   const uploadProductPic = async (prodId) => {
@@ -158,21 +151,7 @@ const AddProductModal = ({
                     name='category'
                     type='text'
                     placeholder='Enter category'
-                    hidden
                   />
-                  <ListGroup>
-                    {categories.map((cat) => (
-                      <ListGroup.Item
-                        style={{ cursor: 'pointer' }}
-                        onClick={() =>
-                          setFields({ ...fields, category: cat.id })
-                        }
-                        key={cat.id}
-                      >
-                        {cat.name}
-                      </ListGroup.Item>
-                    ))}
-                  </ListGroup>
                 </Form.Group>
                 <Form.Group>
                   <Form.File

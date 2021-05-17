@@ -6,7 +6,7 @@ export default class Reviews extends Component {
     return (
       <ListGroup>
         <h3>Reviews</h3>
-        {this.props.reviews.map((rev) => {
+        {this.props.reviews?.map((rev) => {
           const {
             content,
             id,
